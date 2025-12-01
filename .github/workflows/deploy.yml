@@ -29,7 +29,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build da Imagem
-        run: docker build -t pauloEnrickSS/consumer:latest .
+        run: docker build -t pauloenrickss/kafka-consumer:latest .
 
       - name: Deploy para o Dockerhub
-        run: docker push pauloEnrickSS/consumer:latest
+        run: docker push pauloenrickss/kafka-consumer:latest
