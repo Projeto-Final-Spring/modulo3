@@ -1,4 +1,4 @@
-FROM amazoncorretto:24-alpine
+FROM amazoncorretto:21-alpine
 LABEL MANTAINER="MODULO3"
 
 WORKDIR /app
