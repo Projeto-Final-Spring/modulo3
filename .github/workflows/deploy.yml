@@ -1,0 +1,35 @@
+name: Subir consumer para o DockerHub
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: actions/checkout@v5
+        uses: actions/checkout@v5
+
+      - name: Setup do Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: 21
+
+      - name: Download do Wrapper
+        run: mvn -N io.takari:maven:wrapper -Dmaven=3.9.9
+
+      - name: Build do Projeto
+        run: mvn clean install -Dmaven.test.skip
+
+      - name: Integralção com Dockerhub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build da Imagem
+        run: docker build -t modulo3/consumer:latest .
+
+      - name: Deploy para o Dockerhub
+        run: docker push modulo3/consumer:latest
